@@ -22,7 +22,7 @@ type defaultLogger struct {
 
 func (l *defaultLogger) output(level int, levelKey string, v ...interface{}) error {
 	if l.Level >= level {
-		h := header(levelKey, fmt.Sprintf(v...))
+		h := header(levelKey, fmt.Sprint(v...))
 		return l.Output(calldepth, h)
 	}else {
 		return nil

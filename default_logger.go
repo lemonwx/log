@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"image/color"
 )
 
 const (
@@ -24,7 +23,7 @@ type defaultLogger struct {
 func (l *defaultLogger) output(level int, levelKey string, v ...interface{}) error {
 	if l.Level >= level {
 		h := header(levelKey, fmt.Sprintf(v...))
-		return l.output(calldepth, h)
+		return l.Output(calldepth, h)
 	}else {
 		return nil
 	}
@@ -33,7 +32,7 @@ func (l *defaultLogger) output(level int, levelKey string, v ...interface{}) err
 func (l *defaultLogger) outputf(level int, levelKey string, format string, v ...interface{}) error {
 	if l.Level >= level {
 		h := header(levelKey, fmt.Sprintf(format, v...))
-		return l.output(calldepth, h)
+		return l.Output(calldepth, h)
 	} else {
 		return nil
 	}

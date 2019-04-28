@@ -2,6 +2,7 @@ package log
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"os"
 )
@@ -20,11 +21,15 @@ type defaultLogger struct {
 	Level int
 }
 
+func NewDefaultLogger(w io.Writer, level int) *defaultLogger {
+	return &defaultLogger{log.New(w, "", log.LstdFlags|log.Lshortfile), level}
+}
+
 func (l *defaultLogger) output(level int, levelKey string, v ...interface{}) error {
 	if l.Level >= level {
 		h := header(levelKey, fmt.Sprint(v...))
 		return l.Output(calldepth, h)
-	}else {
+	} else {
 		return nil
 	}
 }
@@ -37,7 +42,6 @@ func (l *defaultLogger) outputf(level int, levelKey string, format string, v ...
 		return nil
 	}
 }
-
 
 func (l *defaultLogger) Debug(v ...interface{}) {
 	l.output(DEBUG, "DEBUG", v)
